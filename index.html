@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alcove — Where your people gather</title>
+<meta name="description" content="Alcove brings messaging, voice, and feeds together in one warm, distraction-free space. Like Discord, Reddit, and Facebook Groups had a cozy lovechild.">
+<meta property="og:title" content="Alcove — Where your people gather">
+<meta property="og:description" content="Messaging, voice, and feeds in one warm space. Free during early access.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://alcove.gg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c0b10;
+    --surface: #14131a;
+    --card: #1a1820;
+    --card-h: #211f29;
+    --gold: #e3b76f;
+    --gold-dim: #c49a52;
+    --gold-glow: rgba(227,183,111,0.15);
+    --terra: #c47a5a;
+    --sage: #8fa87a;
+    --cream: #f0ece4;
+    --cream-d: #a09a90;
+    --muted: #6b6560;
+    --border: rgba(240,236,228,0.06);
+    --fd: 'Fraunces', Georgia, serif;
+    --fb: 'DM Sans', system-ui, sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;background:var(--bg)}
+  body{font-family:var(--fb);color:var(--cream);background:var(--bg);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+  #bg-canvas{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none}
+  .grain{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;opacity:0.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px}
+  .content{position:relative;z-index:2}
+  section{padding:0 2rem;max-width:1120px;margin:0 auto}
+  .tag{display:inline-block;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.18em;color:var(--gold);font-weight:600;margin-bottom:1.2rem}
+  .divider{max-width:1120px;margin:0 auto;height:1px;background:linear-gradient(90deg,transparent,var(--border) 20%,rgba(227,183,111,0.08) 50%,var(--border) 80%,transparent)}
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease}
+  .reveal.v{opacity:1;transform:translateY(0)}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.1rem 2rem;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(to bottom,var(--bg) 60%,transparent);transition:background 0.4s,backdrop-filter 0.4s}
+  nav.scrolled{background:rgba(12,11,16,0.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+  .nav-b{display:flex;align-items:center;gap:0.65rem;text-decoration:none}
+  .nav-b .wm{font-family:var(--fd);font-size:1.35rem;font-weight:600;color:var(--cream);letter-spacing:-0.01em}
+  .nav-l{display:flex;align-items:center;gap:2.2rem;list-style:none}
+  .nav-l a{color:var(--cream-d);text-decoration:none;font-size:0.88rem;font-weight:400;transition:color 0.2s}
+  .nav-l a:hover{color:var(--cream)}
+  .nav-cta{background:var(--gold)!important;color:var(--bg)!important;padding:0.5rem 1.3rem!important;border-radius:8px;font-weight:600!important;transition:transform 0.2s,box-shadow 0.2s}
+  .nav-cta:hover{transform:translateY(-1px);box-shadow:0 4px 20px var(--gold-glow)}
+
+  /* HERO */
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding-top:6rem;padding-bottom:5rem}
+  .hero-logo{margin-bottom:2.5rem;opacity:0;animation:fi 1s ease forwards 0.1s}
+  .hero h1{font-family:var(--fd);font-size:clamp(2.8rem,6.5vw,5rem);font-weight:600;line-height:1.1;letter-spacing:-0.02em;color:var(--cream);margin-bottom:1.5rem;max-width:720px;opacity:0;animation:fu 0.9s ease forwards 0.3s}
+  .hero h1 .ac{background:linear-gradient(135deg,var(--gold),var(--terra));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .hero-sub{font-size:clamp(1rem,1.8vw,1.15rem);color:var(--cream-d);line-height:1.75;max-width:520px;font-weight:300;margin-bottom:2.5rem;opacity:0;animation:fu 0.9s ease forwards 0.55s}
+  .hero-act{display:flex;gap:0.9rem;flex-wrap:wrap;justify-content:center;opacity:0;animation:fu 0.9s ease forwards 0.75s}
+  .btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.8rem 1.8rem;border-radius:10px;font-family:var(--fb);font-size:0.95rem;font-weight:500;text-decoration:none;cursor:pointer;border:none;transition:transform 0.2s,box-shadow 0.2s}
+  .btn:hover{transform:translateY(-2px)}
+  .btn svg{width:17px;height:17px;flex-shrink:0}
+  .btn-p{background:var(--gold);color:var(--bg);box-shadow:0 2px 16px var(--gold-glow)}
+  .btn-p:hover{box-shadow:0 6px 28px rgba(227,183,111,0.3)}
+  .btn-g{background:transparent;color:var(--cream-d);border:1px solid rgba(240,236,228,0.1)}
+  .btn-g:hover{color:var(--cream);background:rgba(240,236,228,0.04);border-color:rgba(240,236,228,0.15)}
+  .hero-meta{margin-top:1.5rem;display:flex;align-items:center;gap:1.2rem;opacity:0;animation:fu 0.9s ease forwards 0.95s}
+  .hero-meta span{font-size:0.78rem;color:var(--muted)}
+  .hero-meta .sep{opacity:0.3}
+  .badge{display:inline-flex;align-items:center;gap:0.4rem;font-size:0.75rem;color:var(--sage);border:1px solid rgba(143,168,122,0.2);background:rgba(143,168,122,0.06);padding:0.25rem 0.7rem;border-radius:100px}
+  .badge .dot{width:5px;height:5px;border-radius:50%;background:var(--sage);animation:pulse 2.5s ease infinite}
+
+  /* PITCH */
+  .pitch{padding-top:7rem;padding-bottom:7rem;text-align:center}
+  .pitch h2{font-family:var(--fd);font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:600;color:var(--cream);line-height:1.2;max-width:640px;margin:0 auto 1.2rem;letter-spacing:-0.01em}
+  .pitch .sub{color:var(--cream-d);font-size:1.05rem;line-height:1.75;max-width:540px;margin:0 auto 4rem;font-weight:300}
+  .cg{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:0;align-items:center;max-width:800px;margin:0 auto}
+  .ci{text-align:center;padding:2rem 1rem}
+  .ci .lb{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);margin-bottom:0.8rem}
+  .ci .nm{font-family:var(--fd);font-size:1.4rem;font-weight:600;margin-bottom:0.4rem}
+  .ci .wh{font-size:0.85rem;color:var(--cream-d);font-weight:300}
+  .cp{font-family:var(--fd);font-size:1.6rem;color:var(--muted);opacity:0.4;padding:0 0.5rem}
+  .ca{display:flex;justify-content:center;margin:2.5rem auto 2rem}
+  .ca svg{width:24px;height:24px;color:var(--gold);opacity:0.5;animation:bob 2s ease-in-out infinite}
+  .cr{text-align:center}
+  .cr .am{display:inline-flex;align-items:center;gap:0.6rem;padding:0.9rem 2rem;background:var(--card);border:1px solid rgba(227,183,111,0.12);border-radius:14px;box-shadow:0 0 40px var(--gold-glow)}
+  .cr .am .wm{font-family:var(--fd);font-size:1.5rem;font-weight:600;color:var(--cream)}
+  .cr p{margin-top:1rem;font-size:0.88rem;color:var(--cream-d);font-weight:300}
+
+  /* PILLARS */
+  .pillars{padding-top:4rem;padding-bottom:8rem}
+  .ph{text-align:center;margin-bottom:4rem}
+  .ph h2{font-family:var(--fd);font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:600;color:var(--cream);line-height:1.2;max-width:580px;margin:0 auto;letter-spacing:-0.01em}
+  .pg{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+  .pl{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2.5rem 2rem;transition:transform 0.3s,border-color 0.3s,box-shadow 0.3s;position:relative;overflow:hidden}
+  .pl::after{content:'';position:absolute;top:-1px;left:20%;right:20%;height:2px;border-radius:2px;opacity:0;transition:opacity 0.4s}
+  .pl:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.3)}
+  .pl:hover::after{opacity:1}
+  .pl:nth-child(1)::after{background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+  .pl:nth-child(1):hover{border-color:rgba(227,183,111,0.1)}
+  .pl:nth-child(2)::after{background:linear-gradient(90deg,transparent,var(--sage),transparent)}
+  .pl:nth-child(2):hover{border-color:rgba(143,168,122,0.1)}
+  .pl:nth-child(3)::after{background:linear-gradient(90deg,transparent,var(--terra),transparent)}
+  .pl:nth-child(3):hover{border-color:rgba(196,122,90,0.1)}
+  .pi{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem}
+  .pi svg{width:24px;height:24px}
+  .pi.go{background:rgba(227,183,111,0.1);color:var(--gold)}
+  .pi.sa{background:rgba(143,168,122,0.1);color:var(--sage)}
+  .pi.te{background:rgba(196,122,90,0.1);color:var(--terra)}
+  .pl h3{font-family:var(--fd);font-size:1.35rem;font-weight:600;color:var(--cream);margin-bottom:0.75rem;letter-spacing:-0.01em}
+  .pl>p{color:var(--cream-d);font-size:0.92rem;line-height:1.7;font-weight:300;margin-bottom:1.5rem}
+  .pf{list-style:none;display:flex;flex-direction:column;gap:0.5rem}
+  .pf li{display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;color:var(--cream-d);font-weight:400}
+  .ck{width:16px;height:16px;flex-shrink:0;border-radius:4px;display:flex;align-items:center;justify-content:center}
+  .ck svg{width:10px;height:10px}
+  .pl:nth-child(1) .ck{background:rgba(227,183,111,0.1);color:var(--gold)}
+  .pl:nth-child(2) .ck{background:rgba(143,168,122,0.1);color:var(--sage)}
+  .pl:nth-child(3) .ck{background:rgba(196,122,90,0.1);color:var(--terra)}
+
+  /* WHY */
+  .why{padding-top:4rem;padding-bottom:8rem}
+  .wl{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+  .wv{position:relative;aspect-ratio:1;max-width:440px;border-radius:24px;overflow:hidden;background:var(--card);border:1px solid var(--border)}
+  .wv .orbs{position:absolute;inset:0}
+  .orb{position:absolute;border-radius:50%;filter:blur(50px);animation:od 10s ease-in-out infinite}
+  .o1{width:180px;height:180px;background:var(--gold);opacity:0.3;top:15%;left:10%}
+  .o2{width:140px;height:140px;background:var(--terra);opacity:0.25;top:45%;right:10%;animation-delay:-4s}
+  .o3{width:120px;height:120px;background:var(--sage);opacity:0.2;bottom:12%;left:25%;animation-delay:-7s}
+  .wv .it{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:2rem;z-index:1}
+  .wv .it .tl{font-family:var(--fd);font-size:1.8rem;font-weight:600;color:var(--cream);line-height:1.25;margin-bottom:0.5rem}
+  .wv .it .ts{font-size:0.88rem;color:var(--cream-d);font-weight:300}
+  .wt h2{font-family:var(--fd);font-size:clamp(1.8rem,3.5vw,2.4rem);font-weight:600;color:var(--cream);line-height:1.2;margin-bottom:1.5rem;letter-spacing:-0.01em}
+  .wt p{color:var(--cream-d);font-size:1rem;line-height:1.8;font-weight:300;margin-bottom:1.25rem}
+  .wt p strong{color:var(--cream);font-weight:500}
+  .wt .em{color:var(--gold);font-family:var(--fd);font-size:1.15rem;font-style:italic;margin-top:0.5rem}
+
+  /* CTA */
+  .cta-s{padding-top:4rem;padding-bottom:10rem;text-align:center;display:flex;flex-direction:column;align-items:center}
+  .cta-s h2{font-family:var(--fd);font-size:clamp(2rem,4vw,3rem);font-weight:600;color:var(--cream);line-height:1.15;margin-bottom:1rem;letter-spacing:-0.01em;max-width:500px}
+  .cta-s .sub{color:var(--cream-d);font-size:1.05rem;font-weight:300;max-width:420px;margin-bottom:2.5rem;line-height:1.7}
+  .plats{margin-top:1.2rem;display:flex;align-items:center;gap:1rem}
+  .plats span{font-size:0.78rem;color:var(--muted)}
+  .plats .sep{opacity:0.3}
+
+  /* FOOTER */
+  footer{position:relative;z-index:2;padding:2.5rem 2rem;border-top:1px solid var(--border)}
+  .fi{max-width:1120px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+  .fb{display:flex;align-items:center;gap:0.5rem}
+  .fb .wm{font-family:var(--fd);font-size:0.95rem;color:var(--muted)}
+  .fr{font-size:0.75rem;color:rgba(107,101,96,0.6)}
+
+  /* ANIMATIONS */
+  @keyframes fi{from{opacity:0}to{opacity:1}}
+  @keyframes fu{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.35}}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+  @keyframes od{0%,100%{transform:translate(0,0) scale(1)}25%{transform:translate(12px,-18px) scale(1.06)}50%{transform:translate(-8px,10px) scale(0.94)}75%{transform:translate(15px,8px) scale(1.03)}}
+
+  /* RESPONSIVE */
+  @media(max-width:900px){
+    .cg{grid-template-columns:1fr;gap:0.5rem;max-width:280px;margin:0 auto}
+    .cp{transform:rotate(0);padding:0}
+    .pg{grid-template-columns:1fr;max-width:480px;margin:0 auto}
+    .wl{grid-template-columns:1fr;gap:2.5rem}
+    .wv{max-width:100%;aspect-ratio:16/10}
+  }
+  @media(max-width:600px){
+    nav{padding:0.9rem 1.25rem}
+    .hm{display:none}
+    section{padding:0 1.25rem}
+    .hero{min-height:92vh;padding-top:5rem}
+    .hero-act{flex-direction:column;align-items:center;width:100%}
+    .btn{width:100%;justify-content:center;max-width:320px}
+  }
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+<div class="grain"></div>
+
+<div class="content">
+
+<nav id="nav">
+  <a href="/" class="nav-b">
+    <svg width="28" height="28" viewBox="0 0 140 140" fill="none">
+      <defs><linearGradient id="ng" x1="40" y1="30" x2="100" y2="110" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#e3b76f"/><stop offset="100%" stop-color="#c47a5a"/></linearGradient></defs>
+      <path d="M32 102C32 58 48 32 70 32C92 32 108 58 108 102" stroke="#e3b76f" stroke-width="4.5" stroke-linecap="round" stroke-opacity="0.2"/>
+      <path d="M44 102C44 66 54 44 70 44C86 44 96 66 96 102" stroke="#e3b76f" stroke-width="5" stroke-linecap="round" stroke-opacity="0.45"/>
+      <path d="M56 102C56 76 61 60 70 60C79 60 84 76 84 102" stroke="url(#ng)" stroke-width="5.5" stroke-linecap="round"/>
+      <circle cx="70" cy="90" r="7" fill="#e3b76f"/>
+    </svg>
+    <span class="wm">alcove</span>
+  </a>
+  <ul class="nav-l">
+    <li class="hm"><a href="#features">Features</a></li>
+    <li class="hm"><a href="#why">Why Alcove</a></li>
+    <li><a href="#download" class="nav-cta">Download</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-logo">
+    <svg width="160" height="160" viewBox="0 0 140 140" fill="none">
+      <defs><linearGradient id="hg" x1="40" y1="30" x2="100" y2="110" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#e3b76f"/><stop offset="100%" stop-color="#c47a5a"/></linearGradient></defs>
+      <path d="M32 102C32 58 48 32 70 32C92 32 108 58 108 102" stroke="#e3b76f" stroke-width="4.5" stroke-linecap="round" stroke-opacity="0.2"/>
+      <path d="M44 102C44 66 54 44 70 44C86 44 96 66 96 102" stroke="#e3b76f" stroke-width="5" stroke-linecap="round" stroke-opacity="0.45"/>
+      <path d="M56 102C56 76 61 60 70 60C79 60 84 76 84 102" stroke="url(#hg)" stroke-width="5.5" stroke-linecap="round"/>
+      <circle cx="70" cy="90" r="7" fill="#e3b76f"/>
+    </svg>
+  </div>
+  <h1>Where your people <span class="ac">gather</span></h1>
+  <p class="hero-sub">Messaging, voice, and feeds in one warm, focused space. Think Discord meets Reddit — built for groups that feel like home.</p>
+  <div class="hero-act">
+    <a href="#download" class="btn btn-p" id="dl1">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+      Download for free
+    </a>
+    <a href="#features" class="btn btn-g">Learn more</a>
+  </div>
+  <div class="hero-meta">
+    <div class="badge"><span class="dot"></span> Early access</div>
+    <span class="sep">&middot;</span><span>Windows</span>
+    <span class="sep">&middot;</span><span>macOS</span>
+    <span class="sep">&middot;</span><span>Linux</span>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="pitch reveal">
+  <span class="tag">The idea</span>
+  <h2>Three platforms. One alcove.</h2>
+  <p class="sub">Your community is split across chat apps, forums, and social groups. We think it belongs in one place.</p>
+  <div class="cg">
+    <div class="ci reveal"><div class="lb">Real-time chat</div><div class="nm" style="color:#7289da">Discord</div><div class="wh">Channels &amp; voice</div></div>
+    <div class="cp">+</div>
+    <div class="ci reveal"><div class="lb">Threaded feeds</div><div class="nm" style="color:#ff4500">Reddit</div><div class="wh">Posts &amp; discussion</div></div>
+    <div class="cp">+</div>
+    <div class="ci reveal"><div class="lb">Private groups</div><div class="nm" style="color:#1877f2">Groups</div><div class="wh">Closed communities</div></div>
+  </div>
+  <div class="ca reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></div>
+  <div class="cr reveal">
+    <div class="am">
+      <svg width="28" height="28" viewBox="0 0 140 140" fill="none">
+        <defs><linearGradient id="cg" x1="40" y1="30" x2="100" y2="110" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#e3b76f"/><stop offset="100%" stop-color="#c47a5a"/></linearGradient></defs>
+        <path d="M32 102C32 58 48 32 70 32C92 32 108 58 108 102" stroke="#e3b76f" stroke-width="4.5" stroke-linecap="round" stroke-opacity="0.2"/>
+        <path d="M44 102C44 66 54 44 70 44C86 44 96 66 96 102" stroke="#e3b76f" stroke-width="5" stroke-linecap="round" stroke-opacity="0.45"/>
+        <path d="M56 102C56 76 61 60 70 60C79 60 84 76 84 102" stroke="url(#cg)" stroke-width="5.5" stroke-linecap="round"/>
+        <circle cx="70" cy="90" r="7" fill="#e3b76f"/>
+      </svg>
+      <span class="wm">alcove</span>
+    </div>
+    <p>One room for your entire community.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="pillars" id="features">
+  <div class="ph reveal">
+    <span class="tag">What's inside</span>
+    <h2>Everything your group needs, nothing it doesn't</h2>
+  </div>
+  <div class="pg">
+    <div class="pl reveal">
+      <div class="pi go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
+      <h3>Feeds &amp; posts</h3>
+      <p>Not everything should disappear in a chat scroll. Posts live front and center where your community can find them.</p>
+      <ul class="pf">
+        <li><span class="ck"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg></span> Rich posts with comments</li>
+        <li><span class="ck"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg></span> Feed sections per Room</li>
+        <li><span class="ck"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg></span> Save to Keep for later</li>
+      </ul>
+    </div>
+    <div class="pl reveal">
+      <div class="pi sa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg></div>
+      <h3>Voice &amp; messaging</h3>
+      <p>Channels organized into sections, plus voice rooms you can drop into. See who's around before joining.</p>
+      <ul class="pf">
+        <li><span class="ck"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg></span> Real-time messaging</li>
+        <li><span class="ck"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg></span> Voice channels with presence</li>
+        <li><span class="ck"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg></span> Organized by sections</li>
+      </ul>
+    </div>
+    <div class="pl reveal">
+      <div class="pi te"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg></div>
+      <h3>Keep &amp; Shelves</h3>
+      <p>Your personal bookmarking system. Save messages, posts, and links — then organize them into Shelves.</p>
+      <ul class="pf">
+        <li><span class="ck"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg></span> Save anything, anywhere</li>
+        <li><span class="ck"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg></span> Custom Shelves to organize</li>
+        <li><span class="ck"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg></span> Never lose important stuff</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="why" id="why">
+  <div class="wl">
+    <div class="wv reveal">
+      <div class="orbs"><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div></div>
+      <div class="it"><div class="tl">Warm by design,<br>not by accident.</div><div class="ts">Every pixel chosen with intention.</div></div>
+    </div>
+    <div class="wt reveal">
+      <span class="tag">Why Alcove</span>
+      <h2>Community tools shouldn't all look the same</h2>
+      <p>Discord is built for gamers. Slack is built for offices. Facebook Groups are built for algorithms. <strong>None of them are built for your community.</strong></p>
+      <p>Alcove uses earthy tones, thoughtful spacing, and a distraction-free layout — because the space you gather in shapes how you connect. Cold tools make cold communities.</p>
+      <p>Built with Tauri — not Electron. That means <strong>native speed, tiny footprint,</strong> and an app that doesn't eat your RAM for breakfast.</p>
+      <p class="em">"The structure of a big platform. The warmth of a small one."</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="cta-s" id="download">
+  <div class="reveal">
+    <span class="tag">Get started</span>
+    <h2>Step inside.</h2>
+    <p class="sub">Alcove is free during early access. Download the app and start building your space.</p>
+    <div class="hero-act">
+      <a href="#" class="btn btn-p" id="dl2">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        Download for Windows
+      </a>
+      <a href="#" class="btn btn-g">View all platforms</a>
+    </div>
+    <div class="plats">
+      <span>Windows</span><span class="sep">&middot;</span>
+      <span>macOS</span><span class="sep">&middot;</span>
+      <span>Linux</span><span class="sep">&middot;</span>
+      <span>Web (coming soon)</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fi">
+    <div class="fb">
+      <svg width="18" height="18" viewBox="0 0 140 140" fill="none">
+        <path d="M32 102C32 58 48 32 70 32C92 32 108 58 108 102" stroke="#6b6560" stroke-width="4.5" stroke-linecap="round" stroke-opacity="0.3"/>
+        <path d="M44 102C44 66 54 44 70 44C86 44 96 66 96 102" stroke="#6b6560" stroke-width="5" stroke-linecap="round" stroke-opacity="0.5"/>
+        <path d="M56 102C56 76 61 60 70 60C79 60 84 76 84 102" stroke="#6b6560" stroke-width="5.5" stroke-linecap="round"/>
+        <circle cx="70" cy="90" r="7" fill="#6b6560"/>
+      </svg>
+      <span class="wm">alcove</span>
+    </div>
+    <div class="fr">&copy; 2026 Dogma Studios LLC</div>
+  </div>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  const ua=navigator.userAgent.toLowerCase();
+  let p='Windows';
+  if(ua.includes('mac'))p='macOS';
+  else if(ua.includes('linux')&&!ua.includes('android'))p='Linux';
+  document.querySelectorAll('#dl1,#dl2').forEach(b=>{
+    const s=b.querySelector('svg')?.outerHTML||'';
+    b.innerHTML=s+` Download for ${p}`;
+  });
+})();
+
+const nav=document.getElementById('nav');
+let tk=false;
+window.addEventListener('scroll',()=>{if(!tk){requestAnimationFrame(()=>{nav.classList.toggle('scrolled',window.scrollY>50);tk=false});tk=true}});
+
+const ro=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('v');ro.unobserve(e.target)}})},{threshold:0.12,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(e=>ro.observe(e));
+
+(async function(){
+  const c=document.getElementById('bg-canvas');
+  const N=90,dpr=Math.min(window.devicePixelRatio||1,2);
+  function rz(){c.width=window.innerWidth*dpr;c.height=window.innerHeight*dpr;c.style.width=window.innerWidth+'px';c.style.height=window.innerHeight+'px'}
+  rz();window.addEventListener('resize',rz);
+  const pal=[[227,183,111],[196,122,90],[143,168,122],[240,236,228],[212,151,74]];
+  function mp(){return Array.from({length:N},()=>{const cl=pal[Math.floor(Math.random()*pal.length)];return{x:Math.random(),y:Math.random(),vx:(Math.random()-0.5)*0.00025,vy:-Math.random()*0.00018-0.00008,sz:Math.random()*2.2+0.6,a:Math.random()*0.35+0.05,ph:Math.random()*Math.PI*2,sp:Math.random()*0.6+0.4,c:cl}})}
+  let gpu=false;
+  if(navigator.gpu){try{
+    const ad=await navigator.gpu.requestAdapter();
+    if(ad){const dv=await ad.requestDevice();const cx=c.getContext('webgpu');
+    if(cx){const fm=navigator.gpu.getPreferredCanvasFormat();
+    cx.configure({device:dv,format:fm,alphaMode:'premultiplied'});
+    const sh=dv.createShaderModule({code:`
+      struct U{res:vec2f,time:f32,scroll:f32};struct P{pos:vec2f,vel:vec2f,size:f32,alpha:f32,phase:f32,speed:f32,color:vec3f,_p:f32};
+      @group(0)@binding(0)var<uniform>u:U;@group(0)@binding(1)var<storage,read>ps:array<P>;
+      struct V{@builtin(position)pos:vec4f,@location(0)uv:vec2f,@location(1)a:f32,@location(2)c:vec3f};
+      @vertex fn vs(@builtin(vertex_index)v:u32,@builtin(instance_index)i:u32)->V{
+        let p=ps[i];let q=array(vec2f(-1,-1),vec2f(1,-1),vec2f(-1,1),vec2f(1,-1),vec2f(1,1),vec2f(-1,1));
+        let t=u.time*p.speed+p.phase;var px=fract(p.pos.x+p.vel.x*u.time*60.0+sin(t*0.7)*0.008);
+        var py=fract(p.pos.y+p.vel.y*u.time*60.0+cos(t*0.5)*0.006);
+        py=fract(py+u.scroll*(0.08+p.speed*0.12));let sp=vec2f(px*2.0-1.0,1.0-py*2.0);
+        let sz=p.size/u.res.y*3.5;let o=q[v]*vec2f(sz/(u.res.x/u.res.y),sz);
+        var out:V;out.pos=vec4f(sp+o,0.0,1.0);out.uv=q[v];
+        out.a=p.alpha*(0.65+0.35*sin(t*2.0));out.c=p.color/255.0;return out;}
+      @fragment fn fs(in:V)->@location(0)vec4f{let g=exp(-dot(in.uv,in.uv)*3.0)*in.a;return vec4f(in.c*g,g);}
+    `});
+    const pp=dv.createRenderPipeline({layout:'auto',vertex:{module:sh,entryPoint:'vs'},fragment:{module:sh,entryPoint:'fs',targets:[{format:fm,blend:{color:{srcFactor:'one',dstFactor:'one',operation:'add'},alpha:{srcFactor:'one',dstFactor:'one',operation:'add'}}}]},primitive:{topology:'triangle-list'}});
+    const pts=mp();const pd=new Float32Array(N*12);
+    pts.forEach((p,i)=>{const o=i*12;pd[o]=p.x;pd[o+1]=p.y;pd[o+2]=p.vx;pd[o+3]=p.vy;pd[o+4]=p.sz;pd[o+5]=p.a;pd[o+6]=p.ph;pd[o+7]=p.sp;pd[o+8]=p.c[0];pd[o+9]=p.c[1];pd[o+10]=p.c[2];pd[o+11]=0});
+    const pb=dv.createBuffer({size:pd.byteLength,usage:GPUBufferUsage.STORAGE|GPUBufferUsage.COPY_DST});
+    dv.queue.writeBuffer(pb,0,pd);
+    const ub=dv.createBuffer({size:16,usage:GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST});
+    const bg=dv.createBindGroup({layout:pp.getBindGroupLayout(0),entries:[{binding:0,resource:{buffer:ub}},{binding:1,resource:{buffer:pb}}]});
+    gpu=true;const t0=performance.now();
+    (function f(){const t=(performance.now()-t0)/1000;const s=window.scrollY/(document.body.scrollHeight-window.innerHeight||1);
+    dv.queue.writeBuffer(ub,0,new Float32Array([c.width,c.height,t,s]));
+    const en=dv.createCommandEncoder();const pa=en.beginRenderPass({colorAttachments:[{view:cx.getCurrentTexture().createView(),loadOp:'clear',storeOp:'store',clearValue:{r:0,g:0,b:0,a:0}}]});
+    pa.setPipeline(pp);pa.setBindGroup(0,bg);pa.draw(6,N);pa.end();dv.queue.submit([en.finish()]);requestAnimationFrame(f)})();
+    }}
+  }catch(e){}}
+  if(!gpu){const cx=c.getContext('2d');const pts=mp();const t0=performance.now();
+  (function f(){const t=(performance.now()-t0)/1000;const s=window.scrollY/(document.body.scrollHeight-window.innerHeight||1);
+  const w=c.width,h=c.height;cx.clearRect(0,0,w,h);
+  for(const p of pts){const ft=t*p.sp+p.ph;let px=(p.x+p.vx*t*60+Math.sin(ft*0.7)*0.008)%1;
+  let py=(p.y+p.vy*t*60+Math.cos(ft*0.5)*0.006)%1;if(px<0)px+=1;if(py<0)py+=1;
+  py=(py+s*(0.08+p.sp*0.12))%1;const sx=px*w,sy=py*h;
+  const a=p.a*(0.65+0.35*Math.sin(ft*2));const r=p.sz*dpr*2;
+  const g=cx.createRadialGradient(sx,sy,0,sx,sy,r);
+  g.addColorStop(0,`rgba(${p.c[0]},${p.c[1]},${p.c[2]},${a})`);
+  g.addColorStop(1,`rgba(${p.c[0]},${p.c[1]},${p.c[2]},0)`);
+  cx.beginPath();cx.arc(sx,sy,r,0,Math.PI*2);cx.fillStyle=g;cx.fill()}
+  requestAnimationFrame(f)})()}
+})();
+</script>
+
+</body>
+</html>
