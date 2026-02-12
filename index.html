@@ -360,15 +360,45 @@
 </div>
 
 <script>
-(function(){
-  const ua=navigator.userAgent.toLowerCase();
-  let p='Windows';
-  if(ua.includes('mac'))p='macOS';
-  else if(ua.includes('linux')&&!ua.includes('android'))p='Linux';
-  document.querySelectorAll('#dl1,#dl2').forEach(b=>{
-    const s=b.querySelector('svg')?.outerHTML||'';
-    b.innerHTML=s+` Download for ${p}`;
+(async function() {
+  const repo = 'Dogma-Studios/alcove';
+  const ua = navigator.userAgent.toLowerCase();
+  const releasesPage = `https://github.com/${repo}/releases/latest`;
+
+  // Detect platform and corresponding installer filename pattern
+  let platform = 'Windows';
+  let filePattern = '_x64-setup.exe';
+
+  if (ua.includes('mac')) {
+    platform = 'macOS';
+    filePattern = '_aarch64.dmg';
+  } else if (ua.includes('linux') && !ua.includes('android')) {
+    platform = 'Linux';
+    filePattern = '_amd64.AppImage';
+  }
+
+  // Set button text immediately with fallback href to releases page
+  document.querySelectorAll('#dl1,#dl2').forEach(b => {
+    const svg = b.querySelector('svg')?.outerHTML || '';
+    b.innerHTML = svg + ` Download for ${platform}`;
+    b.href = releasesPage;
   });
+
+  // Fetch latest release from GitHub API to get direct download URL
+  try {
+    const res = await fetch(`https://api.github.com/repos/${repo}/releases/latest`);
+    if (res.ok) {
+      const data = await res.json();
+      const asset = data.assets.find(a => a.name.includes(filePattern));
+      if (asset) {
+        document.querySelectorAll('#dl1,#dl2').forEach(b => {
+          b.href = asset.browser_download_url;
+        });
+      }
+    }
+  } catch (e) {
+    // Fallback: buttons already point to releases page
+  }
 })();
 
 const nav=document.getElementById('nav');
