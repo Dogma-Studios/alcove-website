@@ -331,7 +331,7 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
         Download for Windows
       </a>
-      <a href="https://github.com/Dogma-Studios/alcove/releases/latest" class="btn btn-g">View all platforms</a>
+      <a href="https://downloads.alcove.gg/releases/latest/" class="btn btn-g">View all platforms</a>
     </div>
     <div class="plats">
       <span>Windows</span><span class="sep">&middot;</span>
@@ -361,43 +361,43 @@
 
 <script>
 (async function() {
-  const repo = 'Dogma-Studios/alcove';
+  const base = 'https://downloads.alcove.gg/releases/latest/';
   const ua = navigator.userAgent.toLowerCase();
-  const releasesPage = `https://github.com/${repo}/releases/latest`;
+  const fallback = 'https://alcove.gg';
 
-  // Detect platform and corresponding installer filename pattern
+  // Detect platform
   let platform = 'Windows';
-  let filePattern = '_x64-setup.exe';
+  let fileKey = 'windows-exe';
 
   if (ua.includes('mac')) {
     platform = 'macOS';
-    filePattern = '_aarch64.dmg';
+    fileKey = 'macos-dmg';
   } else if (ua.includes('linux') && !ua.includes('android')) {
     platform = 'Linux';
-    filePattern = '_amd64.AppImage';
+    fileKey = 'linux-appimage';
   }
 
-  // Set button text immediately with fallback href to releases page
+  // Set button text immediately with fallback href
   document.querySelectorAll('#dl1,#dl2').forEach(b => {
     const svg = b.querySelector('svg')?.outerHTML || '';
-    b.innerHTML = svg + ` Download for ${platform}`;
-    b.href = releasesPage;
+    b.innerHTML = svg + ' Download for ' + platform;
+    b.href = fallback;
   });
 
-  // Fetch latest release from GitHub API to get direct download URL
+  // Fetch manifest from R2 to resolve the exact filename
   try {
-    const res = await fetch(`https://api.github.com/repos/${repo}/releases/latest`);
+    const res = await fetch(base + 'manifest.json');
     if (res.ok) {
-      const data = await res.json();
-      const asset = data.assets.find(a => a.name.includes(filePattern));
-      if (asset) {
+      const manifest = await res.json();
+      const file = manifest.files[fileKey];
+      if (file) {
         document.querySelectorAll('#dl1,#dl2').forEach(b => {
-          b.href = asset.browser_download_url;
+          b.href = base + file;
         });
       }
     }
   } catch (e) {
-    // Fallback: buttons already point to releases page
+    // Fallback already set — buttons link to homepage
   }
 })();
 
