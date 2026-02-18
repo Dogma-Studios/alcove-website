@@ -200,7 +200,7 @@
   <ul class="nav-l">
     <li class="hm"><a href="#features">Features</a></li>
     <li class="hm"><a href="#why">Why Alcove</a></li>
-    <li><a href="https://github.com/Dogma-Studios/alcove/releases/latest" class="nav-cta" id="dl3">Download</a></li>
+    <li><a href="https://downloads.alcove.gg/releases/latest/Alcove_x64-setup.exe" class="nav-cta" id="dl3">Download</a></li>
   </ul>
 </nav>
 
@@ -217,7 +217,7 @@
   <h1>Where your people <span class="ac">gather</span></h1>
   <p class="hero-sub">Messaging, voice, and feeds in one warm, focused space. Think Discord meets Reddit — built for groups that feel like home.</p>
   <div class="hero-act">
-    <a href="https://github.com/Dogma-Studios/alcove/releases/latest" class="btn btn-p" id="dl1">
+    <a href="https://downloads.alcove.gg/releases/latest/Alcove_x64-setup.exe" class="btn btn-p" id="dl1">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
       Download for free
     </a>
@@ -330,9 +330,9 @@
   <div class="reveal">
     <span class="tag">Get started</span>
     <h2>Step inside.</h2>
-    <p class="sub">Alcove is free during early access. Download the app or open it right in your browser.</p>
+    <p class="sub">Alcove will always have a free tier. No ads, no data selling — your privacy isn't a premium feature. Just download and step inside.</p>
     <div class="hero-act">
-      <a href="https://github.com/Dogma-Studios/alcove/releases/latest" class="btn btn-p" id="dl2">
+      <a href="https://downloads.alcove.gg/releases/latest/Alcove_x64-setup.exe" class="btn btn-p" id="dl2">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
         Download for free
       </a>
@@ -368,49 +368,26 @@
 </div>
 
 <script>
-(async function() {
+(function() {
   const base = 'https://downloads.alcove.gg/releases/latest/';
   const ua = navigator.userAgent.toLowerCase();
-  const fallback = 'https://alcove.gg';
+  const files = {
+    Windows: 'Alcove_x64-setup.exe',
+    macOS:   'Alcove_aarch64.dmg',
+    Linux:   'Alcove_x86_64.AppImage'
+  };
 
-  // Detect platform
   let platform = 'Windows';
-  let fileKey = 'windows-exe';
+  if (ua.includes('mac')) platform = 'macOS';
+  else if (ua.includes('linux') && !ua.includes('android')) platform = 'Linux';
 
-  if (ua.includes('mac')) {
-    platform = 'macOS';
-    fileKey = 'macos-dmg';
-  } else if (ua.includes('linux') && !ua.includes('android')) {
-    platform = 'Linux';
-    fileKey = 'linux-appimage';
-  }
+  const href = base + files[platform];
+  document.querySelectorAll('#dl1,#dl2,#dl3').forEach(b => { b.href = href; });
 
-  // Set fallback href on all download buttons (including nav)
-  document.querySelectorAll('#dl1,#dl2,#dl3').forEach(b => {
-    b.href = fallback;
-  });
-
-  // Set button text with platform name (nav button keeps its short label)
   document.querySelectorAll('#dl1,#dl2').forEach(b => {
     const svg = b.querySelector('svg')?.outerHTML || '';
     b.innerHTML = svg + ' Download for ' + platform;
   });
-
-  // Fetch manifest from R2 to resolve the exact filename
-  try {
-    const res = await fetch(base + 'manifest.json');
-    if (res.ok) {
-      const manifest = await res.json();
-      const file = manifest.files[fileKey];
-      if (file) {
-        document.querySelectorAll('#dl1,#dl2,#dl3').forEach(b => {
-          b.href = base + file;
-        });
-      }
-    }
-  } catch (e) {
-    // Fallback already set — buttons link to homepage
-  }
 })();
 
 const nav=document.getElementById('nav');
