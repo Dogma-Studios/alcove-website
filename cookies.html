@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cookie Policy — Alcove</title>
+<link rel="icon" href="/favicon.ico">
+<meta name="description" content="Alcove Cookie Policy — how we use cookies and similar technologies.">
+<meta property="og:title" content="Cookie Policy — Alcove">
+<meta property="og:description" content="Alcove Cookie Policy — how we use cookies and similar technologies.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://alcove.gg/cookies.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c0b10;
+    --surface: #14131a;
+    --card: #1a1820;
+    --card-h: #211f29;
+    --gold: #e3b76f;
+    --gold-dim: #c49a52;
+    --gold-glow: rgba(227,183,111,0.15);
+    --terra: #c47a5a;
+    --sage: #8fa87a;
+    --cream: #f0ece4;
+    --cream-d: #a09a90;
+    --muted: #6b6560;
+    --border: rgba(240,236,228,0.06);
+    --fd: 'Fraunces', Georgia, serif;
+    --fb: 'DM Sans', system-ui, sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;background:var(--bg)}
+  body{font-family:var(--fb);color:var(--cream);background:var(--bg);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.1rem 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(12,11,16,0.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+  .nav-b{display:flex;align-items:center;gap:0.65rem;text-decoration:none}
+  .nav-b .wm{font-family:var(--fd);font-size:1.35rem;font-weight:600;color:var(--cream);letter-spacing:-0.01em}
+  .nav-back{color:var(--cream-d);text-decoration:none;font-size:0.88rem;font-weight:400;transition:color 0.2s;display:flex;align-items:center;gap:0.4rem}
+  .nav-back:hover{color:var(--cream)}
+  .nav-back svg{width:16px;height:16px}
+
+  /* LEGAL CONTENT */
+  .legal-wrap{max-width:800px;margin:0 auto;padding:7rem 2rem 5rem}
+
+  .legal-header{margin-bottom:3rem;padding-bottom:2rem;border-bottom:1px solid var(--border)}
+  .legal-header h1{font-family:var(--fd);font-size:clamp(1.8rem,4vw,2.6rem);font-weight:600;color:var(--cream);line-height:1.2;letter-spacing:-0.01em;margin-bottom:0.75rem}
+  .legal-meta{display:flex;flex-wrap:wrap;gap:1.5rem;font-size:0.82rem;color:var(--muted)}
+
+  .legal-body h1{font-family:var(--fd);font-size:1.5rem;font-weight:600;color:var(--cream);margin:2.5rem 0 1rem;letter-spacing:-0.01em}
+  .legal-body h2{font-family:var(--fd);font-size:1.2rem;font-weight:600;color:var(--cream);margin:2rem 0 0.75rem}
+  .legal-body h3{font-family:var(--fd);font-size:1.05rem;font-weight:600;color:var(--cream);margin:1.5rem 0 0.5rem}
+  .legal-body p{color:var(--cream-d);font-size:0.95rem;line-height:1.85;margin-bottom:1rem;font-weight:300}
+  .legal-body ul,.legal-body ol{margin:0 0 1.25rem 1.5rem}
+  .legal-body li{color:var(--cream-d);font-size:0.95rem;line-height:1.85;margin-bottom:0.6rem;font-weight:300}
+  .legal-body strong{color:var(--cream);font-weight:500}
+  .legal-body em{font-style:italic}
+  .legal-body a{color:var(--gold);text-decoration:none;transition:color 0.2s}
+  .legal-body a:hover{text-decoration:underline}
+  .legal-body table{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:0.9rem}
+  .legal-body th,.legal-body td{padding:0.75rem 1rem;text-align:left;border:1px solid var(--border)}
+  .legal-body th,.legal-body td p{margin:0}
+  .legal-body th{background:var(--surface);color:var(--cream);font-weight:500}
+  .legal-body td{color:var(--cream-d);font-weight:300}
+  .legal-body tr:nth-child(even) td{background:rgba(255,255,255,0.015)}
+
+  /* FOOTER */
+  footer{position:relative;z-index:2;padding:3rem 2rem;border-top:1px solid var(--border);margin-top:2rem}
+  .ft-inner{max-width:1120px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;gap:3rem}
+  .ft-brand{display:flex;flex-direction:column;gap:0.75rem}
+  .ft-logo{display:flex;align-items:center;gap:0.5rem;text-decoration:none}
+  .ft-logo span{font-family:var(--fd);font-size:0.95rem;color:var(--muted);transition:color 0.2s}
+  .ft-logo:hover span{color:var(--cream-d)}
+  .ft-brand p{font-size:0.75rem;color:rgba(107,101,96,0.6)}
+  .ft-cols{display:flex;gap:4rem}
+  .ft-col{display:flex;flex-direction:column;gap:0.5rem}
+  .ft-col h4{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.14em;color:var(--cream-d);font-weight:600;margin-bottom:0.3rem}
+  .ft-col a{color:var(--muted);text-decoration:none;font-size:0.82rem;font-weight:400;transition:color 0.2s}
+  .ft-col a:hover{color:var(--cream)}
+
+  @media(max-width:768px){
+    nav{padding:0.9rem 1.25rem}
+    .legal-wrap{padding:6rem 1.25rem 3rem}
+    .legal-header h1{font-size:1.6rem}
+    .ft-inner{flex-direction:column;gap:2rem}
+    .ft-cols{gap:2.5rem}
+    .legal-body table{display:block;overflow-x:auto}
+  }
+  @media(max-width:480px){
+    .ft-cols{flex-direction:column;gap:1.5rem}
+    .legal-meta{flex-direction:column;gap:0.3rem}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-b">
+    <svg width="18" height="18" viewBox="0 0 140 140" fill="none"><path d="M32 102C32 58 48 32 70 32C92 32 108 58 108 102" stroke="#6b6560" stroke-width="4.5" stroke-linecap="round" stroke-opacity="0.3"/><path d="M44 102C44 66 54 44 70 44C86 44 96 66 96 102" stroke="#6b6560" stroke-width="5" stroke-linecap="round" stroke-opacity="0.5"/><path d="M56 102C56 76 61 60 70 60C79 60 84 76 84 102" stroke="#6b6560" stroke-width="5.5" stroke-linecap="round"/><circle cx="70" cy="90" r="7" fill="#6b6560"/></svg>
+    <span class="wm">alcove</span>
+  </a>
+  <a href="/" class="nav-back">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    Back to Home
+  </a>
+</nav>
+
+<main class="legal-wrap">
+  <div class="legal-header">
+    <h1>Cookie Policy</h1>
+    <div class="legal-meta">
+      <span>Effective: January 1, 2026</span>
+      <span>Last updated: January 1, 2026</span>
+    </div>
+  </div>
+  <div class="legal-body">
+    <h1>1. What Are Cookies?</h1><p>Cookies are small text files that are placed on your computer or mobile device when you visit a website or use an application. They are widely used to make websites and applications work more efficiently, as well as to provide information to the owners of the site or application.</p><p>Similar technologies include web beacons, pixels, local storage, and device identifiers. When we refer to “cookies” in this policy, we mean cookies and all similar technologies collectively.</p><h1>2. How Alcove Uses Cookies</h1><p>We use cookies for the following purposes:</p><h2>Essential Cookies</h2><p>These cookies are necessary for Alcove to function properly. They enable core functionality such as authentication, session management, security features, and remembering your preferences. Without these cookies, the services you have asked for cannot be provided. These cookies do not require your consent.</p><ul><li><strong>Authentication: </strong>We use cookies to verify your account and determine when you’re logged in so we can provide you with access to Alcove’s features and protect your account.</li><li><strong>Security: </strong>We use cookies to help protect your account and our services from unauthorized access, abuse, and fraud.</li><li><strong>Preferences: </strong>We use cookies to remember your settings and preferences, such as your preferred language, theme, and notification settings.</li></ul><h2>Performance and Analytics Cookies</h2><p>These cookies help us understand how users interact with Alcove so we can improve our services. They collect information about how you use our platform, such as which pages you visit, which features you use, and whether you encounter any errors.</p><ul><li><strong>Usage analytics: </strong>We may use analytics tools to understand how Alcove is used, which helps us improve the experience for all users.</li><li><strong>Error tracking: </strong>We use cookies to detect and diagnose technical issues with our services.</li></ul><h2>Functional Cookies</h2><p>These cookies enable enhanced functionality and personalization, such as remembering choices you make (like your display name or layout preferences) and providing more personalized features.</p><h1>3. Third-Party Cookies</h1><p>Some cookies on Alcove are placed by third-party services that appear on our pages. We do not control the cookies used by these third parties. Third-party cookies may be used for:</p><ul><li><strong>Analytics providers: </strong>To help us measure traffic and usage trends for Alcove.</li><li><strong>Infrastructure providers: </strong>Our hosting and content delivery partners (such as Cloudflare and AWS) may use cookies for performance, security, and load balancing purposes.</li></ul><p>We do not currently use advertising or tracking cookies. If this changes in the future, we will update this Cookie Policy and provide appropriate notice and consent mechanisms.</p><h1>4. How to Control Cookies</h1><p>Most web browsers allow you to control cookies through their settings. You can typically set your browser to block or alert you about cookies, or to delete cookies that have already been placed. Please note that if you choose to block or delete cookies, some features of Alcove may not function properly.</p><p>Here are links to instructions for managing cookies in common browsers:</p><ul><li><strong>Chrome: </strong>Settings &gt; Privacy and Security &gt; Cookies and other site data</li><li><strong>Firefox: </strong>Settings &gt; Privacy &amp; Security &gt; Cookies and Site Data</li><li><strong>Safari: </strong>Preferences &gt; Privacy &gt; Manage Website Data</li><li><strong>Edge: </strong>Settings &gt; Cookies and site permissions &gt; Cookies and site data</li></ul><h1>5. Updates to This Cookie Policy</h1><p>We may update this Cookie Policy from time to time to reflect changes in our practices or for other operational, legal, or regulatory reasons. We will indicate the date the last changes were published at the top of this policy.</p><h1>6. Contact Us</h1><p>If you have any questions about our use of cookies, please contact us at privacy@alcove.gg.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="ft-inner">
+    <div class="ft-brand">
+      <a href="/" class="ft-logo"><svg width="18" height="18" viewBox="0 0 140 140" fill="none"><path d="M32 102C32 58 48 32 70 32C92 32 108 58 108 102" stroke="#6b6560" stroke-width="4.5" stroke-linecap="round" stroke-opacity="0.3"/><path d="M44 102C44 66 54 44 70 44C86 44 96 66 96 102" stroke="#6b6560" stroke-width="5" stroke-linecap="round" stroke-opacity="0.5"/><path d="M56 102C56 76 61 60 70 60C79 60 84 76 84 102" stroke="#6b6560" stroke-width="5.5" stroke-linecap="round"/><circle cx="70" cy="90" r="7" fill="#6b6560"/></svg><span>alcove</span></a>
+      <p>&copy; 2026 Dogma Studios LLC</p>
+    </div>
+    <div class="ft-cols">
+      <div class="ft-col">
+        <h4>Policies</h4>
+        <a href="/terms.html">Terms of Service</a>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/guidelines.html">Community Guidelines</a>
+        <a href="/cookies.html">Cookie Policy</a>
+        <a href="/data-retention.html">Data Retention</a>
+        <a href="/paid-services.html">Paid Services Terms</a>
+      </div>
+      <div class="ft-col">
+        <h4>Company</h4>
+        <a href="/company.html">Company Information</a>
+        <a href="/acknowledgements.html">Acknowledgements</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Community Guidelines — Alcove</title>
+<link rel="icon" href="/favicon.ico">
+<meta name="description" content="Alcove Community Guidelines — rules for content and behavior on Alcove.">
+<meta property="og:title" content="Community Guidelines — Alcove">
+<meta property="og:description" content="Alcove Community Guidelines — rules for content and behavior on Alcove.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://alcove.gg/guidelines.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c0b10;
+    --surface: #14131a;
+    --card: #1a1820;
+    --card-h: #211f29;
+    --gold: #e3b76f;
+    --gold-dim: #c49a52;
+    --gold-glow: rgba(227,183,111,0.15);
+    --terra: #c47a5a;
+    --sage: #8fa87a;
+    --cream: #f0ece4;
+    --cream-d: #a09a90;
+    --muted: #6b6560;
+    --border: rgba(240,236,228,0.06);
+    --fd: 'Fraunces', Georgia, serif;
+    --fb: 'DM Sans', system-ui, sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;background:var(--bg)}
+  body{font-family:var(--fb);color:var(--cream);background:var(--bg);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.1rem 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(12,11,16,0.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+  .nav-b{display:flex;align-items:center;gap:0.65rem;text-decoration:none}
+  .nav-b .wm{font-family:var(--fd);font-size:1.35rem;font-weight:600;color:var(--cream);letter-spacing:-0.01em}
+  .nav-back{color:var(--cream-d);text-decoration:none;font-size:0.88rem;font-weight:400;transition:color 0.2s;display:flex;align-items:center;gap:0.4rem}
+  .nav-back:hover{color:var(--cream)}
+  .nav-back svg{width:16px;height:16px}
+
+  /* LEGAL CONTENT */
+  .legal-wrap{max-width:800px;margin:0 auto;padding:7rem 2rem 5rem}
+
+  .legal-header{margin-bottom:3rem;padding-bottom:2rem;border-bottom:1px solid var(--border)}
+  .legal-header h1{font-family:var(--fd);font-size:clamp(1.8rem,4vw,2.6rem);font-weight:600;color:var(--cream);line-height:1.2;letter-spacing:-0.01em;margin-bottom:0.75rem}
+  .legal-meta{display:flex;flex-wrap:wrap;gap:1.5rem;font-size:0.82rem;color:var(--muted)}
+
+  .legal-body h1{font-family:var(--fd);font-size:1.5rem;font-weight:600;color:var(--cream);margin:2.5rem 0 1rem;letter-spacing:-0.01em}
+  .legal-body h2{font-family:var(--fd);font-size:1.2rem;font-weight:600;color:var(--cream);margin:2rem 0 0.75rem}
+  .legal-body h3{font-family:var(--fd);font-size:1.05rem;font-weight:600;color:var(--cream);margin:1.5rem 0 0.5rem}
+  .legal-body p{color:var(--cream-d);font-size:0.95rem;line-height:1.85;margin-bottom:1rem;font-weight:300}
+  .legal-body ul,.legal-body ol{margin:0 0 1.25rem 1.5rem}
+  .legal-body li{color:var(--cream-d);font-size:0.95rem;line-height:1.85;margin-bottom:0.6rem;font-weight:300}
+  .legal-body strong{color:var(--cream);font-weight:500}
+  .legal-body em{font-style:italic}
+  .legal-body a{color:var(--gold);text-decoration:none;transition:color 0.2s}
+  .legal-body a:hover{text-decoration:underline}
+  .legal-body table{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:0.9rem}
+  .legal-body th,.legal-body td{padding:0.75rem 1rem;text-align:left;border:1px solid var(--border)}
+  .legal-body th,.legal-body td p{margin:0}
+  .legal-body th{background:var(--surface);color:var(--cream);font-weight:500}
+  .legal-body td{color:var(--cream-d);font-weight:300}
+  .legal-body tr:nth-child(even) td{background:rgba(255,255,255,0.015)}
+
+  /* FOOTER */
+  footer{position:relative;z-index:2;padding:3rem 2rem;border-top:1px solid var(--border);margin-top:2rem}
+  .ft-inner{max-width:1120px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;gap:3rem}
+  .ft-brand{display:flex;flex-direction:column;gap:0.75rem}
+  .ft-logo{display:flex;align-items:center;gap:0.5rem;text-decoration:none}
+  .ft-logo span{font-family:var(--fd);font-size:0.95rem;color:var(--muted);transition:color 0.2s}
+  .ft-logo:hover span{color:var(--cream-d)}
+  .ft-brand p{font-size:0.75rem;color:rgba(107,101,96,0.6)}
+  .ft-cols{display:flex;gap:4rem}
+  .ft-col{display:flex;flex-direction:column;gap:0.5rem}
+  .ft-col h4{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.14em;color:var(--cream-d);font-weight:600;margin-bottom:0.3rem}
+  .ft-col a{color:var(--muted);text-decoration:none;font-size:0.82rem;font-weight:400;transition:color 0.2s}
+  .ft-col a:hover{color:var(--cream)}
+
+  @media(max-width:768px){
+    nav{padding:0.9rem 1.25rem}
+    .legal-wrap{padding:6rem 1.25rem 3rem}
+    .legal-header h1{font-size:1.6rem}
+    .ft-inner{flex-direction:column;gap:2rem}
+    .ft-cols{gap:2.5rem}
+    .legal-body table{display:block;overflow-x:auto}
+  }
+  @media(max-width:480px){
+    .ft-cols{flex-direction:column;gap:1.5rem}
+    .legal-meta{flex-direction:column;gap:0.3rem}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-b">
+    <svg width="18" height="18" viewBox="0 0 140 140" fill="none"><path d="M32 102C32 58 48 32 70 32C92 32 108 58 108 102" stroke="#6b6560" stroke-width="4.5" stroke-linecap="round" stroke-opacity="0.3"/><path d="M44 102C44 66 54 44 70 44C86 44 96 66 96 102" stroke="#6b6560" stroke-width="5" stroke-linecap="round" stroke-opacity="0.5"/><path d="M56 102C56 76 61 60 70 60C79 60 84 76 84 102" stroke="#6b6560" stroke-width="5.5" stroke-linecap="round"/><circle cx="70" cy="90" r="7" fill="#6b6560"/></svg>
+    <span class="wm">alcove</span>
+  </a>
+  <a href="/" class="nav-back">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    Back to Home
+  </a>
+</nav>
+
+<main class="legal-wrap">
+  <div class="legal-header">
+    <h1>Community Guidelines</h1>
+    <div class="legal-meta">
+      <span>Effective: January 1, 2026</span>
+      <span>Last updated: January 1, 2026</span>
+    </div>
+  </div>
+  <div class="legal-body">
+    <p>Alcove is built to help you find your people and build meaningful connections around the joy of gaming, shared interests, and community. Our Community Guidelines ensure everyone can express themselves and find belonging—but not at the expense of anyone else.</p><p>These Guidelines are incorporated into our Terms of Service, and further explain what isn’t allowed on Alcove so that we can help create a warm, safe, and positive environment for everyone. Everyone on Alcove must follow these rules, and they apply to all parts of our platform, including your content, behaviors, Rooms, channels, feed posts, voice and video channels, direct messages, and any other features.</p><p>When we discover a violation of these Guidelines—whether through user reports, moderator flags, or proactive detection—we may take a number of enforcement steps based on the severity of the violation, including issuing warnings, removing content, temporarily suspending account access, permanently removing accounts and Rooms, and even reporting violations to law enforcement where required.</p><p>If you come across an account, Room, or content that appears to break these Guidelines, please report it to us at safety@alcove.gg or through available in-app reporting tools.</p><h1>Respect Each Other</h1><p><strong>1. Do not promote, coordinate, or engage in harassment.</strong> We do not allow any type of harassing behavior, including sexual harassment, ban or block evasion, or coordinating Room joins for the purpose of harassing Room members (sometimes called “raiding”).</p><p><strong>2. Do not threaten to harm another individual or group of people.</strong> This includes direct, indirect, and suggestive threats of violence or physical harm.</p><p><strong>3. Do not share or threaten to share the personally identifiable information (PII) of an individual without consent.</strong> This includes providing services that facilitate doxxing, such as buying or selling doxxes or compiling personal information about others for harmful purposes.</p><p><strong>4. Do not use hate speech or engage in other hateful conduct.</strong> This includes the use of hate symbols, imagery, and claims that deny the history of mass human atrocities. We consider hate speech to be any form of expression that either attacks other people or promotes hatred or violence against them based on their protected characteristics, including but not limited to race, ethnicity, national origin, religious affiliation, sexual orientation, gender identity, age, or disability.</p><p><strong>5. Do not organize, promote, or support violent extremism.</strong> This includes coordinating violent acts; glorifying or promoting violence or the perpetrators of violent acts; and promoting conspiracy theories that could encourage or incite violence against others.</p><p><strong>6. Do not create, post, solicit, share, or attempt to distribute content that depicts, promotes, or attempts to normalize child sexual abuse.</strong> This includes manipulated, non-manipulated, or synthetic (AI-generated) media involving real, fictional, and/or anthropomorphized children. This also includes animation, drawing, text, and technical commands or prompts to create such media. We report child sexual abuse material (CSAM) and grooming to the National Center for Missing &amp; Exploited Children, which may subsequently work with local law enforcement.</p><p><strong>7. If you are under the age of 18, do not engage in sexual conduct or any conduct that puts your online or physical safety at risk.</strong> This includes consensual sexual interactions between teens, as well as any encouragement or coordination of behavior that may be harmful. Given the risks associated with online dating, we will remove spaces that encourage or facilitate dating between minors.</p><p><strong>8. Do not engage in any sexual conduct with anyone under the age of 18.</strong> This includes soliciting, sharing, or exchanging sexual content with minors. We report CSAM and grooming to the National Center for Missing &amp; Exploited Children, which may subsequently work with local law enforcement.</p><p><strong>9. Do not make sexually explicit content available to anyone under the age of 18.</strong> Alcove users must be aged 18 or older to view, gain access to, or participate in adult sexual content. Room owners must apply an age-restricted label to any channels that contain sexually explicit content involving adults. Users may not post sexually explicit content in any space that cannot be age-restricted, including in avatars, custom statuses, bios, Room banners, Room icons, emoji, and feed posts in non-age-restricted channels.</p><p><strong>10. Do not share, distribute, or create sexually explicit or sexually suggestive content of other people without the subject’s explicit consent.</strong> This includes the non-consensual distribution of intimate media that was created either with or without an individual’s consent.</p><p><strong>11. Do not share content that glorifies, promotes, or normalizes suicide or other acts of physical self-harm.</strong> This includes content that encourages others to cut, burn, or starve themselves, as well as content that normalizes eating disorders such as anorexia and bulimia. Self-harm acts or threats used as a form of emotional manipulation or coercion are also prohibited.</p><p><strong>12. Do not upload or share any material depicting violence, gore, or animal cruelty.</strong> This is especially prohibited when shared with the intention to harass or shock others.</p><h1>Respect Alcove</h1><p><strong>13. Do not send unsolicited bulk messages (spam) to others.</strong> Also, do not facilitate this activity, such as by selling spambots, Room “raid” tools, account-creation tools, token generators, CAPTCHA-solving services, or other spam tools.</p><p><strong>14. Do not use self-bots or user-bots.</strong> Each account must be associated with a human, not a bot. Automated interactions with the Alcove platform are not permitted unless explicitly authorized through our developer program.</p><p><strong>15. Do not engage with our service in an inauthentic way.</strong> This includes artificially inflating Room membership, manipulating engagement metrics on feed posts or comments, and selling or purchasing artificial engagement services.</p><p><strong>16. Do not sell or purchase Alcove assets.</strong> This includes accounts, usernames, Rooms, Room permissions, invite links, or any other platform assets.</p><p><strong>17. Do not share false or misleading information (misinformation).</strong> Content that is false, misleading, and can lead to significant risk of physical or societal harm may not be shared on Alcove. We may remove content if we reasonably believe its spread could result in damage to physical infrastructure, injury of others, obstruction of participation in civic processes, or the endangerment of public health.</p><p><strong>18. Do not misrepresent your identity on Alcove in a deceptive or harmful way.</strong> This includes creating fake profiles and attempts to impersonate an individual, group, or organization.</p><p><strong>19. Do not evade permanent Alcove-level enforcement actions.</strong> This includes creating new or using existing accounts or communities after being removed for violating our platform rules.</p><p><strong>20. Do not engage in activities that could damage or compromise the security of an account, network, or system.</strong> This includes using deceptive techniques to trick others into revealing sensitive information (phishing), using malicious software (malware), and flooding a target with traffic in order to make a resource unavailable (denial-of-service attacks).</p><p><strong>21. Do not use or attempt to use Alcove to promote, coordinate, or execute financial scams.</strong> A financial scam is any intentionally deceptive act taken with the intent to receive an illegal, unethical, or otherwise dishonest gain.</p><p><strong>22. Do not engage in activities that fraudulently generate a profit at the expense of others.</strong> This includes facilitating, providing instructions for, and participating in fraud. We do not allow coordinated efforts to defraud businesses, price gouging, forgery, money laundering, counterfeit goods, or tools that facilitate illegal behavior.</p><p><strong>23. Do not submit false, misleading, or abusive reports to Alcove’s support or safety teams.</strong> A report will be considered false or misleading if it contains demonstrably untrue information submitted with the intent to manipulate staff into taking a desired action.</p><h1>Follow Applicable Laws</h1><p>As described in our Terms of Service, you must comply with all applicable laws, rules, and regulations. This includes:</p><p><strong>24. Do not share content that violates anyone’s intellectual property or other rights.</strong> This includes sharing or selling game cheats, hacks, or pirated content.</p><p><strong>25. Do not organize, promote, or engage in the selling or facilitation of sales of regulated or potentially dangerous goods.</strong> Regulated goods have laws in place that restrict the purchase, sale, trade, or ownership of the goods. Dangerous goods have a reasonable potential to cause real-world, physical harm to individuals.</p><p><strong>26. Do not coordinate or participate in illegal gambling.</strong> Users are responsible for complying with applicable gambling laws and regulations.</p><p><strong>27. Do not organize, promote, or engage in any illegal activity that harms the dignity, safety, or wellbeing of another person.</strong> This includes but is not limited to human trafficking and sexual solicitation.</p><h1>Reporting Violations</h1><p>If you see any content or activity that violates these Guidelines, our Terms of Service, or any of our other policies, please report it to us at safety@alcove.gg or through available in-app reporting tools. However, please note that we strongly discourage and may take action against vigilantism, as this behavior can put individuals in harm’s way and can also interfere with our investigations and ability to report to law enforcement.</p><h1>Enforcement</h1><p>When we identify a violation of these Community Guidelines, we take enforcement action proportional to the severity of the offense. Our enforcement actions include, but are not limited to:</p><ul><li><strong>Warnings: </strong>Issuing a formal warning to the account holder.</li><li><strong>Content removal: </strong>Removing violating messages, feed posts, comments, media, or other content.</li><li><strong>Temporary suspension: </strong>Temporarily restricting an account’s ability to use some or all Alcove features.</li><li><strong>Permanent ban: </strong>Permanently removing an account and all associated content from the platform.</li><li><strong>Room removal: </strong>Permanently removing a Room and all its content if it is used to violate these Guidelines.</li><li><strong>Law enforcement referral: </strong>Reporting violations to law enforcement where required by law or where we believe there is a genuine risk of harm.</li></ul><p>We may also consider relevant off-platform behavior when making assessments for violations of specific Community Guidelines, particularly in cases involving threats of violence, child safety, or violent extremism.</p><h1>Appeals</h1><p>If you believe an enforcement action was taken in error, you may appeal the decision by contacting us at appeals@alcove.gg or through available in-app appeal options. We will review your appeal and respond in a timely manner.</p><h1>Changes to These Guidelines</h1><p>These Guidelines will continue to evolve over time. This means we may take action against an account, Room, or content that violates the spirit of these Guidelines when we encounter a new threat or harm that is not explicitly covered in the current version.</p><p>We will always make our best effort to notify you when we update these Guidelines, but it is up to you to follow them and to use Alcove responsibly. Keep Alcove safe and help us ensure it remains a great place to build friendships and find your people. Thanks for doing your part.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="ft-inner">
+    <div class="ft-brand">
+      <a href="/" class="ft-logo"><svg width="18" height="18" viewBox="0 0 140 140" fill="none"><path d="M32 102C32 58 48 32 70 32C92 32 108 58 108 102" stroke="#6b6560" stroke-width="4.5" stroke-linecap="round" stroke-opacity="0.3"/><path d="M44 102C44 66 54 44 70 44C86 44 96 66 96 102" stroke="#6b6560" stroke-width="5" stroke-linecap="round" stroke-opacity="0.5"/><path d="M56 102C56 76 61 60 70 60C79 60 84 76 84 102" stroke="#6b6560" stroke-width="5.5" stroke-linecap="round"/><circle cx="70" cy="90" r="7" fill="#6b6560"/></svg><span>alcove</span></a>
+      <p>&copy; 2026 Dogma Studios LLC</p>
+    </div>
+    <div class="ft-cols">
+      <div class="ft-col">
+        <h4>Policies</h4>
+        <a href="/terms.html">Terms of Service</a>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/guidelines.html">Community Guidelines</a>
+        <a href="/cookies.html">Cookie Policy</a>
+        <a href="/data-retention.html">Data Retention</a>
+        <a href="/paid-services.html">Paid Services Terms</a>
+      </div>
+      <div class="ft-col">
+        <h4>Company</h4>
+        <a href="/company.html">Company Information</a>
+        <a href="/acknowledgements.html">Acknowledgements</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
